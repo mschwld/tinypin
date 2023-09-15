@@ -260,12 +260,27 @@ app.addComponent('brickwall', (store) => { return new Reef('#brickwall', {
             `};
         }
 
+        function getPinDescription(pin) {
+            if(pin.description && pin.description.length > 0) {
+                return pin.description;
+            } else {
+                return '&nbsp;';
+            }
+        }
+
+        function getPinCreated(pin) {
+            const created = new Date(Date.parse(pin.createDate));
+            return created.getFullYear().toString();
+        }
+
         function createBrickForPin(board, pin){
             return  { height: pin.thumbnailHeight, template: /*html*/`
             <div class="brick" >
                 <a data-pinid="${pin.id}" onclick="openLightGallery(${pin.id})" >
                     <img class="thumb" src="${getImagePath(pin.id, 400)}" width="${pin.thumbnailWidth}" height="${pin.thumbnailHeight}"/>
                 </a>
+                <span class="lblCreated">${getPinCreated(pin)}</span>
+                <span class="lblDesc">${getPinDescription(pin)}</span>
             </div>
             `};
         }
